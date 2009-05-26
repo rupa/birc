@@ -1,6 +1,6 @@
 An IRC bot written in shell
 
-    birc <channel> <nick> [server [port]
+    birc <channel> <nick> [server [port]]
 
 Takes commands echo'ed into .<nick>/.ctl
     Example: echo "PRIVMSG #channel Hay guys!" >> .ctl
