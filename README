@@ -5,3 +5,4 @@ Takes commands echo'ed into .<nick>/.ctl
 
 Looks for scripts to run in .<nick>/
     Scripts receive lines in <STDIN>, and $1 is bot's nick
+    make scripts executable to enable them, chmod -x to disable them
