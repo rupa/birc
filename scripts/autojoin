@@ -1,4 +1,5 @@
 #!/bin/bash
+# be annoying when kicked
 
 cat - | awk '
  $2 == "KICK" { print "JOIN " $3 }

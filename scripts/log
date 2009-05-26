@@ -1,3 +1,4 @@
 #!/bin/bash
+# write everything to a log
 
 cat - >> .log

@@ -1,4 +1,5 @@
 #!/bin/bash
+# for CAPSLOCK DAY!!!
 
 cat - | awk -v nick="$1" '
  $2 == "PRIVMSG" {
