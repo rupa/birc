@@ -1,7 +1,7 @@
 #!/bin/bash
 # for CAPSLOCK DAY!!!
 
-cat - | awk -v nick="$1" '
+cat - | awk '
  $2 == "PRIVMSG" {
   split(substr($1,2), b, "!")
   from = b[1]
