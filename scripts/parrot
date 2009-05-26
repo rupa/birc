@@ -1,0 +1,16 @@
+#!/bin/bash
+
+cat - | awk -v nick="$1" '
+ $2 == "PRIVMSG" {
+  split(substr($1,2), b, "!")
+  from = b[1]
+  host = b[2]
+  to = $3
+  msg = substr($0, index(substr($0,2), ":") + 1)
+
+  if( to == nick ) to = from
+
+  print "PRIVMSG " to " " msg
+
+ }
+' >> .ctl

@@ -1,0 +1,39 @@
+#!/bin/bash
+# irc bot
+
+# keep *'s in input from expanding
+set -o noglob
+
+[ $2 ] || {
+ echo "use: $(basename $0) <channel> <nick> [server [port]]"
+ exit
+}
+
+CHAN=$1
+NICK=$2
+SERV=${3:-irc.slashnet.org}
+PORT=${4:-6667}
+CTLDIR=.$NICK
+
+# setup, and give at least a passthrough script
+[ -d "$CTLDIR" ] || {
+ mkdir "$CTLDIR"
+ echo -e '#!/bin/bash\n\ncat -' > "$CTLDIR"/passthrough
+ chmod +x "$CTLDIR"/passthrough
+}
+cd "$CTLDIR"
+
+echo "NICK $NICK" > .ctl
+echo "USER $RANDOM +iw $NICK :$0" >> .ctl
+tail -f .ctl | telnet $SERV $PORT | while :; do
+ read LINE || break
+ # join a channel, and maintain connection
+ echo $LINE | awk -v c="$CHAN" ' 
+  $1 == "PING" { print "PONG", $2 }
+  $2 == "004" { print "JOIN", c }
+ ' >> .ctl
+ # run any scripts in CTLDIR
+ for x in $(ls); do
+  echo $LINE | ./$x $NICK 2>/dev/null
+ done
+done

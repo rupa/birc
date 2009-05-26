@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cat - | awk '
+ $2 == "KICK" { print "JOIN " $3 }
+' >> .ctl
