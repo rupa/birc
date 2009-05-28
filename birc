@@ -36,4 +36,11 @@ tail -f .ctl | telnet $SERV $PORT | while :; do
  for x in $(ls); do
   echo $LINE | ./$x $NICK 2>/dev/null
  done
+done &
+
+# background the main loop and allow input
+trap "kill $(echo $(jobs -p))" EXIT
+while :; do
+ read -e INPUT
+ echo $INPUT >> .ctl
 done
